@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Story App</string>
+    <string name="title_activity_main">Story App</string>
+    <string name="title_home">Home</string>
+    <string name="title_login">Login</string>
+    <string name="title_register">Register</string>
+    <string name="register_text">Register</string>
+    <string name="username_text">Username</string>
+    <string name="password_text">Password</string>
+    <string name="sign_up_here_text">Don\'t have an account? Sign Up Here</string>
+    <string name="email_text">Email</string>
+    <string name="sign_in_here_text">Already have account? Sign In Here</string>
+    <string name="name_text">name</string>
+    <string name="story_image_text">Story Image</string>
+    <string name="detail_story_text">DetailStory</string>
+    <string name="add_story_button_text">Add Story Button</string>
+    <string name="add_story_text">Add Story</string>
+    <string name="image_upload_preview_text">Image Upload Preview</string>
+    <string name="upload_text">Upload</string>
+    <string name="description_hint_text">Write Description Here..</string>
+    <string name="open_camera_text">Open Camera</string>
+    <string name="logout_desc">Logout</string>
+    <string name="open_gallery_text">Open Gallery</string>
+    <string name="story_logo_desc">Story Logo</string>
+</resources>
