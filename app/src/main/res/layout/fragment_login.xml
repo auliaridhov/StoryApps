@@ -43,6 +43,17 @@
             android:layout_height="wrap_content"
             android:text="@string/title_login"/>
 
+        <ProgressBar
+            android:indeterminate="true"
+            android:indeterminateTintMode="src_atop"
+            android:indeterminateTint="@color/darkBlue"
+            android:visibility="gone"
+            android:layout_margin="18dp"
+            android:id="@+id/loading_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_login"/>
+
         <TextView
             android:id="@+id/text_sign_up"
             android:gravity="center"

@@ -23,4 +23,9 @@
     <string name="logout_desc">Logout</string>
     <string name="open_gallery_text">Open Gallery</string>
     <string name="story_logo_desc">Story Logo</string>
+    <string name="welcome_text">Welcome,</string>
+    <string name="detail_story_text_appbar">Detail Story</string>
+    <string name="add_story_text_appbar">Create Story</string>
+    <string name="error_password_text">Must more than 6 character</string>
+    <string name="error_email_text">Email invalid</string>
 </resources>

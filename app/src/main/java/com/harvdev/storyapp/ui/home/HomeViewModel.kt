@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import com.harvdev.storyapp.data.UserPreference
 import com.harvdev.storyapp.model.ResponseStories
 import com.harvdev.storyapp.model.Story
+import com.harvdev.storyapp.model.UserModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -31,6 +32,11 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         value = emptyList()
     }
     val listStories: LiveData<List<Story>> = _listStories
+
+    private val _profile = MutableLiveData<UserModel>().apply {
+        value = UserModel()
+    }
+    val profile: LiveData<UserModel> = _profile
 
     fun getStories(){
         Log.d("storyy-called", "callleddd")
@@ -57,6 +63,11 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
                 Log.e(ContentValues.TAG, "onFailure: ${t.message.toString()}")
             }
         })
+    }
+
+    fun getProfile(){
+        val userPreference = UserPreference(context)
+        _profile.value = userPreference.getUser()
     }
 
     fun logout(){

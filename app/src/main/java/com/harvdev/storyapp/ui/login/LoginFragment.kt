@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -29,6 +30,7 @@ class LoginFragment : Fragment() {
     private lateinit var btnLogin: Button
 
     private lateinit var textSignUp: TextView
+    private lateinit var loadingBar: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,9 +55,11 @@ class LoginFragment : Fragment() {
     private fun initBinding(binding: FragmentLoginBinding){
         btnLogin = binding.btnLogin
         edemail = binding.edLoginEmail
+        edemail.setEmailType()
         edPassword = binding.edLoginPassword
         edPassword.setInputTypePassword()
         textSignUp = binding.textSignUp
+        loadingBar = binding.loadingBar
     }
 
     private fun initViewModel(){
@@ -65,13 +69,19 @@ class LoginFragment : Fragment() {
 
     private fun initObserver(){
         loginViewModel.isLoading.observe(viewLifecycleOwner, Observer {
-
+            if (it){
+                btnLogin.visibility = View.GONE
+                loadingBar.visibility = View.VISIBLE
+            } else {
+                btnLogin.visibility = View.VISIBLE
+                loadingBar.visibility = View.GONE
+            }
         })
     }
 
     private fun initOnClickListener(){
         btnLogin.setOnClickListener {
-            if (edemail.isNotEmpty() && edPassword.isNotEmptyAndError())
+            if (edemail.isNotEmptyAndError() && edPassword.isNotEmptyAndError())
                 loginViewModel.login(edemail.text.toString(), edPassword.text.toString()){ isError, message ->
                     if (isError == true){
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()

@@ -26,11 +26,11 @@ class RegisterViewModel : ViewModel() {
                 response: Response<ResponseRegister>
             ) {
                 _isLoading.value = false
-                if (response.isSuccessful) {
+                if (response.isSuccessful && response.body()?.error == false) {
                     callback(response.body()?.error, response.body()?.message)
                 } else {
                     Log.e(TAG, "onFailure: ${response.message()}")
-                    callback(response.body()?.error, response.message())
+                    callback(true, response.message())
                 }
             }
 

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +18,7 @@ import com.harvdev.storyapp.model.Story
 import com.harvdev.storyapp.ui.utils.safeNavigate
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import org.w3c.dom.Text
 
 class HomeFragment : Fragment() {
 
@@ -30,6 +32,7 @@ class HomeFragment : Fragment() {
     private lateinit var adapter: StoriesAdapter
     private lateinit var addButton: FloatingActionButton
     private lateinit var btnLogout: ImageView
+    private lateinit var textUsername: TextView
 
 
     override fun onCreateView(
@@ -52,6 +55,7 @@ class HomeFragment : Fragment() {
 
 
         homeViewModel.getStories()
+        homeViewModel.getProfile()
     }
 
     private fun initBinding(binding: FragmentHomeBinding){
@@ -59,6 +63,7 @@ class HomeFragment : Fragment() {
         loadingView = binding.progressBar
         addButton = binding.addStoryFab
         btnLogout = binding.actionLogout
+        textUsername = binding.usernameText
     }
 
     private fun initViewModel(){
@@ -97,6 +102,9 @@ class HomeFragment : Fragment() {
         })
         homeViewModel.listStories.observe(viewLifecycleOwner, Observer {
             adapter.updateData(it)
+        })
+        homeViewModel.profile.observe(viewLifecycleOwner, Observer {
+            textUsername.text = it.name
         })
     }
 

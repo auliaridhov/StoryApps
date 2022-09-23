@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -31,6 +32,7 @@ class RegisterFragment : Fragment() {
     private lateinit var btnLogin: Button
 
     private lateinit var signInText: TextView
+    private lateinit var loadingBar: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,9 +57,11 @@ class RegisterFragment : Fragment() {
         btnLogin = binding.btnRegister
         edNama = binding.edRegisterName
         edEmail = binding.edRegisterEmail
+        edEmail.setEmailType()
         edPassword = binding.edRegisterPassword
         edPassword.setInputTypePassword()
         signInText = binding.textSignIn
+        loadingBar = binding.loadingBar
     }
 
     private fun initViewModel(){
@@ -67,13 +71,19 @@ class RegisterFragment : Fragment() {
 
     private fun initObserver(){
         registerViewModel.isLoading.observe(viewLifecycleOwner, Observer {
-
+            if (it){
+                btnLogin.visibility = View.GONE
+                loadingBar.visibility = View.VISIBLE
+            } else {
+                btnLogin.visibility = View.VISIBLE
+                loadingBar.visibility = View.GONE
+            }
         })
     }
 
     private fun initOnClickListener(){
         btnLogin.setOnClickListener {
-            if (edNama.isNotEmpty() && edEmail.isNotEmpty() && edPassword.isNotEmptyAndError())
+            if (edNama.isNotEmpty() && edEmail.isNotEmptyAndError() && edPassword.isNotEmptyAndError())
                 registerViewModel.register(
                     edNama.text.toString(),
                     edEmail.text.toString(), edPassword.text.toString()

@@ -22,4 +22,9 @@
     <string name="logout_desc">Keluar</string>
     <string name="open_gallery_text">Buka Gallery</string>
     <string name="story_logo_desc">Story Logo</string>
+    <string name="welcome_text">Selamat Datang,</string>
+    <string name="detail_story_text_appbar">Detail Story</string>
+    <string name="add_story_text_appbar">Buat Story</string>
+    <string name="error_password_text">Harus lebih dari 6 karakter</string>
+    <string name="error_email_text">Email Tidak Valid</string>
 </resources>

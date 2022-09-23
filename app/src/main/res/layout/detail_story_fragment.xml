@@ -6,19 +6,46 @@
     android:layout_height="match_parent"
     tools:context=".ui.detailstory.DetailStoryFragment">
 
+    <LinearLayout
+        android:background="@color/darkGrey"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <TextView
+            android:layout_marginHorizontal="16dp"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/detail_story_text_appbar"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>
+
     <ImageView
+        android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:id="@+id/iv_detail_photo"
         android:contentDescription="@string/story_image_text"/>
 
     <TextView
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="16dp"
+        android:textSize="18sp"
+        android:text="@string/detail_story_text_appbar"
+        android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Nama"
         android:id="@+id/tv_detail_name"/>
 
     <TextView
+        android:layout_marginVertical="10dp"
+        android:layout_marginHorizontal="16dp"
+        android:text="@string/detail_story_text_appbar"
+        android:textColor="@color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Description"
