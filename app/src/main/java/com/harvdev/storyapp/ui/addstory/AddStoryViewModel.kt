@@ -21,6 +21,7 @@ class AddStoryViewModel(application: Application) : AndroidViewModel(application
     fun uploadImage(file: File, desc: String, callback: (Boolean?, String?) -> Unit){
 
         val description = desc.toRequestBody("text/plain".toMediaType())
+
         val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
         val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
             "photo",

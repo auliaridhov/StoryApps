@@ -24,6 +24,7 @@
     </LinearLayout>
 
     <ImageView
+        android:transitionName="image"
         android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="200dp"
@@ -31,6 +32,7 @@
         android:contentDescription="@string/story_image_text"/>
 
     <TextView
+        android:transitionName="name"
         android:layout_marginTop="10dp"
         android:layout_marginHorizontal="16dp"
         android:textSize="18sp"
@@ -42,6 +44,7 @@
         android:id="@+id/tv_detail_name"/>
 
     <TextView
+        android:transitionName="description"
         android:layout_marginVertical="10dp"
         android:layout_marginHorizontal="16dp"
         android:text="@string/detail_story_text_appbar"

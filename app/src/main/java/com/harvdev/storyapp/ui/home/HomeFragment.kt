@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.RecyclerView
 import com.harvdev.storyapp.R
 import com.harvdev.storyapp.adapter.StoriesAdapter
@@ -80,12 +82,17 @@ class HomeFragment : Fragment() {
 
         adapter.setOnItemClickCallback(object : StoriesAdapter.OnItemClickCallback {
             override fun onItemClicked(data: Story) {
+                val extras = FragmentNavigatorExtras(
+                    adapter.getView().ivItemPhoto to "image",
+                    adapter.getView().tvItemName to "name",
+                    adapter.getView().storyDesc to "description"
+                )
                 val args = Bundle()
                 args.putSerializable(
                     "DETAIL",
                     data
                 )
-                safeNavigate(FRAGMENT_ID, R.id.action_navigation_home_to_navigation_detail, args)
+                safeNavigate(FRAGMENT_ID, R.id.action_navigation_home_to_navigation_detail, args, null, extras)
             }
         })
         rvStories.adapter = adapter

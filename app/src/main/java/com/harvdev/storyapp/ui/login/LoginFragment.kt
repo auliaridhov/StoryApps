@@ -1,13 +1,12 @@
 package com.harvdev.storyapp.ui.login
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -32,6 +31,8 @@ class LoginFragment : Fragment() {
     private lateinit var textSignUp: TextView
     private lateinit var loadingBar: ProgressBar
 
+    private lateinit var logoImage: ImageView
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,6 +51,7 @@ class LoginFragment : Fragment() {
         initObserver()
         initOnClickListener()
         initCheckAlreadyLogin()
+        playAnimation()
     }
 
     private fun initBinding(binding: FragmentLoginBinding){
@@ -60,6 +62,7 @@ class LoginFragment : Fragment() {
         edPassword.setInputTypePassword()
         textSignUp = binding.textSignUp
         loadingBar = binding.loadingBar
+        logoImage = binding.logoImage
     }
 
     private fun initViewModel(){
@@ -99,6 +102,30 @@ class LoginFragment : Fragment() {
     private fun initCheckAlreadyLogin(){
         if (loginViewModel.isLogin()){
             safeNavigate(FRAGMENT_ID, R.id.action_navigation_login_to_navigation_home)
+        }
+    }
+
+    private fun playAnimation() {
+        ObjectAnimator.ofFloat(logoImage, View.TRANSLATION_X, -30f, 30f).apply {
+            duration = 6000
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }.start()
+
+        val login = ObjectAnimator.ofFloat(btnLogin, View.ALPHA, 1f).setDuration(500)
+        val signup = ObjectAnimator.ofFloat(textSignUp, View.ALPHA, 1f).setDuration(500)
+        val email = ObjectAnimator.ofFloat(edemail, View.ALPHA, 1f).setDuration(500)
+        val password = ObjectAnimator.ofFloat(edPassword, View.ALPHA, 1f).setDuration(500)
+
+
+        val together = AnimatorSet().apply {
+            playTogether(login, signup)
+        }
+
+
+        AnimatorSet().apply {
+            playSequentially(email, password, together)
+            start()
         }
     }
 

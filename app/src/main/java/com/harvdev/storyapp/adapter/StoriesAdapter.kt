@@ -9,12 +9,17 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.harvdev.storyapp.R
+import com.harvdev.storyapp.databinding.StoriesItemBinding
 import com.harvdev.storyapp.model.Story
 
 class StoriesAdapter (private val ctx: Context) :
     RecyclerView.Adapter<StoriesAdapter.ViewHolder>() {
 
     private lateinit var onItemClickCallback: OnItemClickCallback
+//    lateinit var imgPhoto: ImageView
+//    lateinit var tvName: TextView
+//    lateinit var tvDesc: TextView
+    private lateinit var views: StoriesItemBinding
 
     private var listStory: List<Story> = emptyList()
 
@@ -28,8 +33,8 @@ class StoriesAdapter (private val ctx: Context) :
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
-        val view: View =
-            LayoutInflater.from(viewGroup.context).inflate(R.layout.stories_item, viewGroup, false)
+        val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.stories_item, viewGroup, false)
+        views = StoriesItemBinding.bind(view)
         return ViewHolder(view)
     }
 
@@ -41,6 +46,11 @@ class StoriesAdapter (private val ctx: Context) :
         holder.tvName.text = story.name
         holder.tvDesc.text = story.description
         holder.itemView.setOnClickListener { onItemClickCallback.onItemClicked(listStory[holder.adapterPosition]) }
+
+    }
+
+    fun getView() : StoriesItemBinding{
+        return views
     }
 
     override fun getItemCount(): Int = listStory.size
