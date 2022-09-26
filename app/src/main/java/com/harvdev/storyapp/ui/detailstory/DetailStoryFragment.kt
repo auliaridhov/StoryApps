@@ -18,7 +18,6 @@ class DetailStoryFragment : Fragment() {
         fun newInstance() = DetailStoryFragment()
     }
 
-    private lateinit var viewModel: DetailStoryViewModel
     private lateinit var imageStory: ImageView
     private lateinit var nameText: TextView
     private lateinit var descText: TextView

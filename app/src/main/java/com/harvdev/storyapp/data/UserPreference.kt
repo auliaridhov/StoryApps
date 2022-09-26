@@ -4,12 +4,7 @@ import android.content.Context
 import com.harvdev.storyapp.model.UserModel
 
 internal class UserPreference(context: Context) {
-    companion object {
-        private const val PREFS_NAME = "user_pref"
-        private const val NAME = "name"
-        private const val USER_ID = "email"
-        private const val TOKEN = "token"
-    }
+
     private val preferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     fun setUser(value: UserModel) {
         val editor = preferences.edit()
@@ -31,5 +26,11 @@ internal class UserPreference(context: Context) {
         editor.putString(NAME, "")
         editor.putString(TOKEN, "")
         editor.apply()
+    }
+    companion object {
+        private const val PREFS_NAME = "user_pref"
+        private const val NAME = "name"
+        private const val USER_ID = "email"
+        private const val TOKEN = "token"
     }
 }

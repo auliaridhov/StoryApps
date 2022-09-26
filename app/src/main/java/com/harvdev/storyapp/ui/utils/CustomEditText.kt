@@ -80,13 +80,13 @@ class CustomEditText : AppCompatEditText {
     }
 
     private fun setError(){
-        setError(context.getString(R.string.error_password_text))
+        error = context.getString(R.string.error_password_text)
         setBackgroundResource(R.drawable.bg_custom_edit_text_error)
         setPadding(24)
     }
 
     private fun setErrorEmail(){
-        setError(context.getString(R.string.error_email_text))
+        error = context.getString(R.string.error_email_text)
         setBackgroundResource(R.drawable.bg_custom_edit_text_error)
         setPadding(24)
     }

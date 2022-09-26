@@ -16,9 +16,6 @@ class StoriesAdapter (private val ctx: Context) :
     RecyclerView.Adapter<StoriesAdapter.ViewHolder>() {
 
     private lateinit var onItemClickCallback: OnItemClickCallback
-//    lateinit var imgPhoto: ImageView
-//    lateinit var tvName: TextView
-//    lateinit var tvDesc: TextView
     private lateinit var views: StoriesItemBinding
 
     private var listStory: List<Story> = emptyList()
