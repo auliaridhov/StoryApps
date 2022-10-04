@@ -29,4 +29,5 @@
     <string name="error_email_text">Email Tidak Valid</string>
     <string name="maps_desc">Maps</string>
     <string name="maps_fragment_text">Maps Fragment</string>
+    <string name="retry">Coba lagi</string>
 </resources>

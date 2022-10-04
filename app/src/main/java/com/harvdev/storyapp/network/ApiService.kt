@@ -3,6 +3,7 @@ package com.harvdev.storyapp.network
 import com.harvdev.storyapp.model.ResponseLogin
 import com.harvdev.storyapp.model.ResponseRegister
 import com.harvdev.storyapp.model.ResponseStories
+import com.harvdev.storyapp.model.Story
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -27,7 +28,15 @@ interface ApiService {
 
 
     @GET("stories")
-    fun getStories(
+    suspend fun getStories(
+        @Header("Authorization") token: String,
+        @Query("location") location: Int,
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+    ): ResponseStories
+
+    @GET("stories")
+    fun getStoriesMaps(
         @Header("Authorization") token: String,
         @Query("location") location: Int,
         @Query("page") page: Int,

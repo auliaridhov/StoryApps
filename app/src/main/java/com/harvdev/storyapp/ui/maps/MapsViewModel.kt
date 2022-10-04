@@ -34,7 +34,7 @@ class MapsViewModel(application: Application) : AndroidViewModel(application) {
         val token = "Bearer ${userPreference.getUser().token}"
         _isLoading.value = true
         val client =
-            userPreference.getUser().token?.let { ApiConfig.getApiService().getStories(token, 1, 1, 20) }
+            userPreference.getUser().token?.let { ApiConfig.getApiService().getStoriesMaps(token, 1, 1, 20) }
         client?.enqueue(object : Callback<ResponseStories> {
             override fun onResponse(
                 call: Call<ResponseStories>,

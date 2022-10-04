@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.FragmentNavigatorExtras
@@ -20,7 +20,7 @@ import com.harvdev.storyapp.model.Story
 import com.harvdev.storyapp.ui.utils.safeNavigate
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import org.w3c.dom.Text
+import com.harvdev.storyapp.adapter.LoadingStateAdapter
 
 class HomeFragment : Fragment() {
 
@@ -28,7 +28,9 @@ class HomeFragment : Fragment() {
         private const val FRAGMENT_ID = R.id.navigation_home
     }
 
-    private lateinit var homeViewModel: HomeViewModel
+    private val homeViewModel: HomeViewModel by viewModels {
+        ViewModelFactory(requireContext())
+    }
     private lateinit var rvStories: RecyclerView
     private lateinit var loadingView: ProgressBar
     private lateinit var adapter: StoriesAdapter
@@ -42,7 +44,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return FragmentHomeBinding.inflate(inflater, container, false).root
     }
 
@@ -51,14 +53,12 @@ class HomeFragment : Fragment() {
         val binding = FragmentHomeBinding.bind(view)
 
         initBinding(binding)
-        initViewModel()
-        initObserver()
         initRecyclerView()
         initOnClickListener()
+        initObserver()
 
-
-        homeViewModel.getStories()
         homeViewModel.getProfile()
+        getAllStories()
     }
 
     private fun initBinding(binding: FragmentHomeBinding){
@@ -68,11 +68,6 @@ class HomeFragment : Fragment() {
         btnLogout = binding.actionLogout
         textUsername = binding.usernameText
         btnMaps = binding.actionMaps
-    }
-
-    private fun initViewModel(){
-        homeViewModel =
-            ViewModelProvider(this)[HomeViewModel::class.java]
     }
 
     private fun initRecyclerView(){
@@ -97,8 +92,18 @@ class HomeFragment : Fragment() {
                 safeNavigate(FRAGMENT_ID, R.id.action_navigation_home_to_navigation_detail, args, null, extras)
             }
         })
-        rvStories.adapter = adapter
+        rvStories.adapter = adapter.withLoadStateFooter(
+            footer = LoadingStateAdapter {
+                adapter.retry()
+            }
+        )
 
+    }
+
+    private fun getAllStories() {
+        homeViewModel.getAllStories().observe(viewLifecycleOwner) { result ->
+            adapter.submitData(lifecycle, result)
+        }
     }
 
     private fun initObserver(){
@@ -108,9 +113,6 @@ class HomeFragment : Fragment() {
             } else {
                 loadingView.visibility = View.GONE
             }
-        })
-        homeViewModel.listStories.observe(viewLifecycleOwner, Observer {
-            adapter.updateData(it)
         })
         homeViewModel.profile.observe(viewLifecycleOwner, Observer {
             textUsername.text = it.name
@@ -128,6 +130,10 @@ class HomeFragment : Fragment() {
         btnMaps.setOnClickListener {
             safeNavigate(FRAGMENT_ID, R.id.action_navigation_home_to_navigation_maps)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
 }

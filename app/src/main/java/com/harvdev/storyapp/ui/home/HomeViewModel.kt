@@ -2,11 +2,14 @@ package com.harvdev.storyapp.ui.home
 
 import android.app.Application
 import android.content.ContentValues
+import android.content.Context
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.harvdev.storyapp.data.HomeRepository
 import com.harvdev.storyapp.data.UserPreference
+import com.harvdev.storyapp.di.Injection
 import com.harvdev.storyapp.model.ResponseStories
 import com.harvdev.storyapp.model.Story
 import com.harvdev.storyapp.model.UserModel
@@ -14,63 +17,39 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val context = getApplication<Application>().applicationContext
-
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
-    }
-    val text: LiveData<String> = _text
+class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>().apply {
         value = false
     }
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _listStories = MutableLiveData<List<Story>>().apply {
-        value = emptyList()
-    }
-    val listStories: LiveData<List<Story>> = _listStories
-
     private val _profile = MutableLiveData<UserModel>().apply {
         value = UserModel()
     }
     val profile: LiveData<UserModel> = _profile
 
-    fun getStories(){
-        val userPreference = UserPreference(context)
-        val token = "Bearer ${userPreference.getUser().token}"
-        _isLoading.value = true
-        val client =
-            userPreference.getUser().token?.let { ApiConfig.getApiService().getStories(token, 0, 1, 20) }
-        client?.enqueue(object : Callback<ResponseStories> {
-            override fun onResponse(
-                call: Call<ResponseStories>,
-                response: Response<ResponseStories>
-            ) {
-                _isLoading.value = false
-                if (response.isSuccessful) {
-                    _listStories.value = response.body()?.listStory
-                } else {
-                    Log.e(ContentValues.TAG, "onFailure: ${response.message()}")
-                }
-            }
+    val listStories: LiveData<PagingData<Story>> =
+        homeRepository.getStory().cachedIn(viewModelScope)
 
-            override fun onFailure(call: Call<ResponseStories>, t: Throwable) {
-                _isLoading.value = false
-                Log.e(ContentValues.TAG, "onFailure: ${t.message.toString()}")
-            }
-        })
+    fun getAllStories(): LiveData<PagingData<Story>> =
+        homeRepository.getStory().cachedIn(viewModelScope)
+
+    fun getProfile() {
+        _profile.value = homeRepository.getProfile()
     }
 
-    fun getProfile(){
-        val userPreference = UserPreference(context)
-        _profile.value = userPreference.getUser()
+    fun logout() {
+        homeRepository.logout()
     }
+}
 
-    fun logout(){
-        val userPreference = UserPreference(context)
-        userPreference.removeUser()
+class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return HomeViewModel(Injection.provideRepository(context)) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

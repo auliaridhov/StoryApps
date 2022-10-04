@@ -1,6 +1,8 @@
 package com.harvdev.storyapp.model
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
@@ -28,14 +30,17 @@ data class ResponseStories(
     @SerializedName("listStory") var listStory: List<Story>? = emptyList()
 )
 
+@Entity(tableName = "story")
 data class Story(
-    @SerializedName("id") var id: String? = "",
-    @SerializedName("name") var name: String? = "",
-    @SerializedName("description") var description: String? = "",
-    @SerializedName("photoUrl") var photoUrl: String? = "",
-    @SerializedName("createdAt") var createdAt: String? = "",
-    @SerializedName("lat") var lat: Double? = 0.0,
-    @SerializedName("lon") var lon: Double? = 0.0,
+    @PrimaryKey
+    @field:SerializedName("id") var id : String,
+
+    @field:SerializedName("name") var name: String? = "",
+    @field:SerializedName("description") var description: String? = "",
+    @field:SerializedName("photoUrl") var photoUrl: String? = "",
+    @field:SerializedName("createdAt") var createdAt: String? = "",
+    @field:SerializedName("lat") var lat: Double? = 0.0,
+    @field:SerializedName("lon") var lon: Double? = 0.0,
 ) : Serializable
 
 @Parcelize
