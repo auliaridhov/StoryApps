@@ -27,4 +27,6 @@
     <string name="add_story_text_appbar">Buat Story</string>
     <string name="error_password_text">Harus lebih dari 6 karakter</string>
     <string name="error_email_text">Email Tidak Valid</string>
+    <string name="maps_desc">Maps</string>
+    <string name="maps_fragment_text">Maps Fragment</string>
 </resources>

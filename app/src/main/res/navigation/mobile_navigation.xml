@@ -39,6 +39,10 @@
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out"/>
 
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_maps"
+            app:destination="@id/navigation_maps" />
+
 
     </fragment>
 
@@ -93,4 +97,10 @@
         android:name="com.harvdev.storyapp.ui.addstory.AddStoryFragment"
         android:label="@string/add_story_text"
         tools:layout="@layout/add_story_fragment" />
+
+    <fragment
+        android:id="@+id/navigation_maps"
+        android:name="com.harvdev.storyapp.ui.maps.MapsFragment"
+        android:label="@string/maps_fragment_text"
+        tools:layout="@layout/fragment_maps" />
 </navigation>

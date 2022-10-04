@@ -6,7 +6,9 @@
         <entry key="..\:/Project/Android/StoryApp/app/src/main/res/drawable/bg_custom_edit_text.xml" value="0.37864583333333335" />
         <entry key="..\:/Project/Android/StoryApp/app/src/main/res/drawable/bg_custom_edit_text_error.xml" value="0.21875" />
         <entry key="..\:/Project/Android/StoryApp/app/src/main/res/drawable/bg_home_header.xml" value="0.3728205128205128" />
+        <entry key="..\:/Project/Android/StoryApp/app/src/main/res/drawable/ic_baseline_map_24.xml" value="0.3728205128205128" />
         <entry key="..\:/Project/Android/StoryApp/app/src/main/res/drawable/ic_capture.xml" value="0.3728205128205128" />
+        <entry key="..\:/Project/Android/StoryApp/app/src/main/res/drawable/ic_round_exit_to_app_24.xml" value="0.3728205128205128" />
         <entry key="..\:/Project/Android/StoryApp/app/src/main/res/drawable/ic_switch_camera.xml" value="0.3728205128205128" />
         <entry key="..\:/Project/Android/StoryApp/app/src/main/res/layout/activity_camera.xml" value="0.3625" />
         <entry key="..\:/Project/Android/StoryApp/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
@@ -15,6 +17,7 @@
         <entry key="..\:/Project/Android/StoryApp/app/src/main/res/layout/fragment_dashboard.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/Android/StoryApp/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/Android/StoryApp/app/src/main/res/layout/fragment_login.xml" value="0.16" />
+        <entry key="..\:/Project/Android/StoryApp/app/src/main/res/layout/fragment_maps.xml" value="0.3625" />
         <entry key="..\:/Project/Android/StoryApp/app/src/main/res/layout/fragment_notifications.xml" value="0.36666666666666664" />
         <entry key="..\:/Project/Android/StoryApp/app/src/main/res/layout/fragment_register.xml" value="0.3625" />
         <entry key="..\:/Project/Android/StoryApp/app/src/main/res/layout/stories_item.xml" value="0.3625" />

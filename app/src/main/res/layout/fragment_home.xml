@@ -14,7 +14,7 @@
         android:id="@+id/profile_layout">
 
         <LinearLayout
-            android:layout_toStartOf="@+id/action_logout"
+            android:layout_toStartOf="@+id/action_maps"
             android:layout_marginEnd="8dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -39,6 +39,16 @@
 
 
         </LinearLayout>
+
+        <ImageView
+            android:layout_toStartOf="@+id/action_logout"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/action_maps"
+            android:contentDescription="@string/maps_desc"
+            android:src="@drawable/ic_baseline_map_24"/>
 
         <ImageView
             android:layout_alignParentEnd="true"

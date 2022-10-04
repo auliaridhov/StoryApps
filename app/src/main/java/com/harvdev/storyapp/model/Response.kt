@@ -44,3 +44,10 @@ data class UserModel (
     var name: String? = null,
     var token: String? = null,
 ) : Parcelable
+
+@Parcelize
+data class TourismPlace (
+    var title: String,
+    var latitude: Double,
+    var longitude: Double,
+) : Parcelable

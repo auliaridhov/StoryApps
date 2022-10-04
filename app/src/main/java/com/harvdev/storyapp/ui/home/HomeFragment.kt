@@ -34,6 +34,7 @@ class HomeFragment : Fragment() {
     private lateinit var adapter: StoriesAdapter
     private lateinit var addButton: FloatingActionButton
     private lateinit var btnLogout: ImageView
+    private lateinit var btnMaps: ImageView
     private lateinit var textUsername: TextView
 
 
@@ -66,6 +67,7 @@ class HomeFragment : Fragment() {
         addButton = binding.addStoryFab
         btnLogout = binding.actionLogout
         textUsername = binding.usernameText
+        btnMaps = binding.actionMaps
     }
 
     private fun initViewModel(){
@@ -122,6 +124,9 @@ class HomeFragment : Fragment() {
         btnLogout.setOnClickListener {
             homeViewModel.logout()
             safeNavigate(FRAGMENT_ID, R.id.action_navigation_home_to_navigation_login)
+        }
+        btnMaps.setOnClickListener {
+            safeNavigate(FRAGMENT_ID, R.id.action_navigation_home_to_navigation_maps)
         }
     }
 

@@ -1,4 +1,4 @@
-package com.harvdev.storyapp.ui.home
+package com.harvdev.storyapp.ui.maps
 
 import android.app.Application
 import android.content.ContentValues
@@ -6,22 +6,18 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.harvdev.storyapp.data.UserPreference
+import com.harvdev.storyapp.model.ResponseRegister
 import com.harvdev.storyapp.model.ResponseStories
 import com.harvdev.storyapp.model.Story
-import com.harvdev.storyapp.model.UserModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeViewModel(application: Application) : AndroidViewModel(application) {
+class MapsViewModel(application: Application) : AndroidViewModel(application) {
 
     private val context = getApplication<Application>().applicationContext
-
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
-    }
-    val text: LiveData<String> = _text
 
     private val _isLoading = MutableLiveData<Boolean>().apply {
         value = false
@@ -33,17 +29,12 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     }
     val listStories: LiveData<List<Story>> = _listStories
 
-    private val _profile = MutableLiveData<UserModel>().apply {
-        value = UserModel()
-    }
-    val profile: LiveData<UserModel> = _profile
-
     fun getStories(){
         val userPreference = UserPreference(context)
         val token = "Bearer ${userPreference.getUser().token}"
         _isLoading.value = true
         val client =
-            userPreference.getUser().token?.let { ApiConfig.getApiService().getStories(token, 0, 1, 20) }
+            userPreference.getUser().token?.let { ApiConfig.getApiService().getStories(token, 1, 1, 20) }
         client?.enqueue(object : Callback<ResponseStories> {
             override fun onResponse(
                 call: Call<ResponseStories>,
@@ -64,13 +55,4 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         })
     }
 
-    fun getProfile(){
-        val userPreference = UserPreference(context)
-        _profile.value = userPreference.getUser()
-    }
-
-    fun logout(){
-        val userPreference = UserPreference(context)
-        userPreference.removeUser()
-    }
 }
