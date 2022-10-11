@@ -1,0 +1,9 @@
+HomeViewModelTest
+- Memastikan story tidak null
+
+LoginViewModelTest
+- Memastikan registrasi tidak error dan terdapat response message
+- Memastikan login tidak error dan terdapat response message
+
+MapsViewModelTest
+- Memastikan story tidak null
