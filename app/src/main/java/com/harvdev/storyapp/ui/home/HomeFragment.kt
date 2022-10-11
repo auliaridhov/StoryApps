@@ -21,6 +21,7 @@ import com.harvdev.storyapp.ui.utils.safeNavigate
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.harvdev.storyapp.adapter.LoadingStateAdapter
+import com.harvdev.storyapp.ui.utils.ViewModelFactory
 
 class HomeFragment : Fragment() {
 

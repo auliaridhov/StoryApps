@@ -2,10 +2,7 @@ package com.harvdev.storyapp.data
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import androidx.paging.liveData
+import androidx.paging.*
 import com.harvdev.storyapp.database.StoryDatabase
 import com.harvdev.storyapp.model.Story
 import com.harvdev.storyapp.model.UserModel
@@ -16,12 +13,15 @@ class HomeRepository(private val storyDatabase: StoryDatabase, private val apiSe
     private val token = "Bearer ${UserPreference(context).getUser().token}"
 
     fun getStory(): LiveData<PagingData<Story>> {
+        @OptIn(ExperimentalPagingApi::class)
         return Pager(
             config = PagingConfig(
                 pageSize = 5
             ),
+            remoteMediator = StoryRemoteMediator(storyDatabase, apiService, token),
             pagingSourceFactory = {
-                StoryPagingSource(token, apiService)
+//                StoryPagingSource(token, apiService)
+                storyDatabase.storyDao().getAllStory()
             }
         ).liveData
     }

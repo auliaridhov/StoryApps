@@ -9,11 +9,14 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.harvdev.storyapp.R
 import com.harvdev.storyapp.databinding.FragmentRegisterBinding
+import com.harvdev.storyapp.ui.login.LoginViewModel
 import com.harvdev.storyapp.ui.utils.CustomEditText
+import com.harvdev.storyapp.ui.utils.ViewModelFactory
 import com.harvdev.storyapp.ui.utils.safeNavigate
 import com.harvdev.storyapp.ui.utils.safePopBackstack
 
@@ -23,7 +26,9 @@ class RegisterFragment : Fragment() {
         private const val FRAGMENT_ID = R.id.navigation_register
     }
 
-    private lateinit var registerViewModel: RegisterViewModel
+    private val loginViewModel: LoginViewModel by viewModels {
+        ViewModelFactory(requireContext())
+    }
 
     private lateinit var edNama: CustomEditText
     private lateinit var edEmail: CustomEditText
@@ -48,7 +53,6 @@ class RegisterFragment : Fragment() {
         val binding = FragmentRegisterBinding.bind(view)
 
         initBinding(binding)
-        initViewModel()
         initObserver()
         initOnClickListener()
     }
@@ -64,13 +68,8 @@ class RegisterFragment : Fragment() {
         loadingBar = binding.loadingBar
     }
 
-    private fun initViewModel(){
-        registerViewModel =
-            ViewModelProvider(this)[RegisterViewModel::class.java]
-    }
-
     private fun initObserver(){
-        registerViewModel.isLoading.observe(viewLifecycleOwner, Observer {
+        loginViewModel.isLoading.observe(viewLifecycleOwner, Observer {
             if (it){
                 btnLogin.visibility = View.GONE
                 loadingBar.visibility = View.VISIBLE
@@ -84,7 +83,7 @@ class RegisterFragment : Fragment() {
     private fun initOnClickListener(){
         btnLogin.setOnClickListener {
             if (edNama.isNotEmpty() && edEmail.isNotEmptyAndError() && edPassword.isNotEmptyAndError())
-                registerViewModel.register(
+                loginViewModel.register(
                     edNama.text.toString(),
                     edEmail.text.toString(), edPassword.text.toString()
                 ){ error, message ->

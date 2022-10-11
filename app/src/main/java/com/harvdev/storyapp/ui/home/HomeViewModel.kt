@@ -1,21 +1,14 @@
 package com.harvdev.storyapp.ui.home
 
-import android.app.Application
-import android.content.ContentValues
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.harvdev.storyapp.data.HomeRepository
-import com.harvdev.storyapp.data.UserPreference
 import com.harvdev.storyapp.di.Injection
-import com.harvdev.storyapp.model.ResponseStories
 import com.harvdev.storyapp.model.Story
 import com.harvdev.storyapp.model.UserModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.harvdev.storyapp.ui.login.LoginViewModel
 
 class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
 
@@ -29,11 +22,8 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
     }
     val profile: LiveData<UserModel> = _profile
 
-    val listStories: LiveData<PagingData<Story>> =
-        homeRepository.getStory().cachedIn(viewModelScope)
-
     fun getAllStories(): LiveData<PagingData<Story>> =
-        homeRepository.getStory().cachedIn(viewModelScope)
+        homeRepository.getStory()
 
     fun getProfile() {
         _profile.value = homeRepository.getProfile()
@@ -44,12 +34,3 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
     }
 }
 
-class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return HomeViewModel(Injection.provideRepository(context)) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
-}

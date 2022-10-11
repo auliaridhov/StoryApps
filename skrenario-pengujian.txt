@@ -1,5 +1,6 @@
 HomeViewModelTest
 - Memastikan story tidak null
+- Memastikan jumlah data story sesuai dengan yang diharapkan.
 
 LoginViewModelTest
 - Memastikan registrasi tidak error dan terdapat response message

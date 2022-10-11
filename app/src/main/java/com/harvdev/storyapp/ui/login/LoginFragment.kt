@@ -8,12 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.harvdev.storyapp.R
 import com.harvdev.storyapp.databinding.FragmentLoginBinding
 import com.harvdev.storyapp.ui.utils.CustomEditText
 import com.harvdev.storyapp.ui.utils.safeNavigate
+import com.harvdev.storyapp.ui.utils.ViewModelFactory
 
 class LoginFragment : Fragment() {
 
@@ -21,7 +23,9 @@ class LoginFragment : Fragment() {
         private const val FRAGMENT_ID = R.id.navigation_login
     }
 
-    private lateinit var loginViewModel: LoginViewModel
+    private val loginViewModel: LoginViewModel by viewModels {
+        ViewModelFactory(requireContext())
+    }
 
     private lateinit var edemail: CustomEditText
     private lateinit var edPassword: CustomEditText
@@ -47,7 +51,6 @@ class LoginFragment : Fragment() {
         val binding = FragmentLoginBinding.bind(view)
 
         initBinding(binding)
-        initViewModel()
         initObserver()
         initOnClickListener()
         initCheckAlreadyLogin()
@@ -63,11 +66,6 @@ class LoginFragment : Fragment() {
         textSignUp = binding.textSignUp
         loadingBar = binding.loadingBar
         logoImage = binding.logoImage
-    }
-
-    private fun initViewModel(){
-        loginViewModel =
-            ViewModelProvider(this)[LoginViewModel::class.java]
     }
 
     private fun initObserver(){

@@ -20,6 +20,7 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -30,13 +31,18 @@ import com.google.android.gms.maps.model.*
 import com.harvdev.storyapp.R
 import com.harvdev.storyapp.model.Story
 import com.harvdev.storyapp.model.TourismPlace
+import com.harvdev.storyapp.ui.login.LoginViewModel
+import com.harvdev.storyapp.ui.utils.ViewModelFactory
 import java.io.IOException
 import java.util.*
 
 class MapsFragment : Fragment() {
 
     private lateinit var mMap: GoogleMap
-    private lateinit var mapsViewModel: MapsViewModel
+//    private lateinit var mapsViewModel: MapsViewModel
+    private val mapsViewModel: MapsViewModel by viewModels {
+        ViewModelFactory(requireContext())
+    }
 
     private val callback = OnMapReadyCallback { googleMap ->
         /**
@@ -89,7 +95,7 @@ class MapsFragment : Fragment() {
         }
 
         getMyLocation()
-        mapsViewModel.listStories.observe(viewLifecycleOwner){
+        mapsViewModel.getStories().observe(viewLifecycleOwner){
             if (it.isNotEmpty()){
                 addManyMarker(it)
             }
@@ -195,9 +201,9 @@ class MapsFragment : Fragment() {
     }
 
     private fun initViewModel(){
-        mapsViewModel =
-            ViewModelProvider(this)[MapsViewModel::class.java]
+//        mapsViewModel =
+//            ViewModelProvider(this)[MapsViewModel::class.java]
 
-        mapsViewModel.getStories()
+//        mapsViewModel.getStories()
     }
 }
