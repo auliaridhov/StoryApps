@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.harvdev.storyapp.di.Injection
+import com.harvdev.storyapp.ui.addstory.AddStoryViewModel
 import com.harvdev.storyapp.ui.home.HomeViewModel
 import com.harvdev.storyapp.ui.login.LoginViewModel
 import com.harvdev.storyapp.ui.maps.MapsViewModel
@@ -21,6 +22,10 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
         if (modelClass.isAssignableFrom(MapsViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return MapsViewModel(Injection.provideMapsRepository(context)) as T
+        }
+        if (modelClass.isAssignableFrom(AddStoryViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return AddStoryViewModel(Injection.provideAddStoryRepository(context)) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

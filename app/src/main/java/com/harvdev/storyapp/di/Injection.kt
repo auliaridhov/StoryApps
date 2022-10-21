@@ -1,6 +1,7 @@
 package com.harvdev.storyapp.di
 
 import android.content.Context
+import com.harvdev.storyapp.data.AddStoryRepository
 import com.harvdev.storyapp.data.HomeRepository
 import com.harvdev.storyapp.data.LoginRepository
 import com.harvdev.storyapp.data.MapsRepository
@@ -20,5 +21,9 @@ object Injection {
 
     fun provideMapsRepository(context: Context): MapsRepository {
         return MapsRepository(context)
+    }
+
+    fun provideAddStoryRepository(context: Context): AddStoryRepository {
+        return AddStoryRepository(context)
     }
 }

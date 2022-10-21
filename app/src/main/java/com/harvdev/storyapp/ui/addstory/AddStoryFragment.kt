@@ -22,9 +22,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import com.harvdev.storyapp.R
 import com.harvdev.storyapp.databinding.AddStoryFragmentBinding
+import com.harvdev.storyapp.ui.home.HomeViewModel
 import com.harvdev.storyapp.ui.utils.*
 import java.io.File
 
@@ -38,7 +40,9 @@ class AddStoryFragment : Fragment() {
         private const val REQUEST_CODE_PERMISSIONS = 10
     }
 
-    private lateinit var viewModel: AddStoryViewModel
+    private val viewModel: AddStoryViewModel by viewModels {
+        ViewModelFactory(requireContext())
+    }
     private lateinit var previewImageView: ImageView
     private lateinit var btnUpload: Button
     private lateinit var btnOpenCamera: Button
@@ -83,7 +87,7 @@ class AddStoryFragment : Fragment() {
 
         initBinding(binding)
         initPermission()
-        initViewModel()
+//        initViewModel()
 
     }
 
@@ -97,9 +101,9 @@ class AddStoryFragment : Fragment() {
         }
     }
 
-    private fun initViewModel(){
-        viewModel = ViewModelProvider(this)[AddStoryViewModel::class.java]
-    }
+//    private fun initViewModel(){
+//        viewModel = ViewModelProvider(this)[AddStoryViewModel::class.java]
+//    }
 
     private fun startTakePhoto() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)

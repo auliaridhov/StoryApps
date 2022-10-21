@@ -5,6 +5,11 @@ HomeViewModelTest
 LoginViewModelTest
 - Memastikan registrasi tidak error dan terdapat response message
 - Memastikan login tidak error dan terdapat response message
+- Memastikan telah login
 
 MapsViewModelTest
 - Memastikan story tidak null
+
+AddStoryViewModelTest
+- Memastikan jika file nya null gagal untuk upload
+

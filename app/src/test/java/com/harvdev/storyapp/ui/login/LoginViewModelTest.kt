@@ -34,7 +34,6 @@ class LoginViewModelTest {
 
     @Test
     fun `Register successfully`() {
-
         loginViewModel.register(dummyName, dummyEmail, dummyPassword) { isError, message, ->
 
             Assert.assertFalse(isError == false)
@@ -45,13 +44,16 @@ class LoginViewModelTest {
 
     @Test
     fun `Login successfully`() {
-
         loginViewModel.login(dummyEmail, dummyPassword) { isError, message, ->
-
             Assert.assertFalse(isError == false)
             Assert.assertNotNull(message)
         }
 
+    }
+
+    @Test
+    fun `Check Is Login`() {
+        Assert.assertFalse(loginViewModel.isLogin())
     }
 
 }

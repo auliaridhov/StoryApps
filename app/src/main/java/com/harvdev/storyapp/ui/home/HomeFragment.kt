@@ -125,8 +125,11 @@ class HomeFragment : Fragment() {
             safeNavigate(FRAGMENT_ID, R.id.action_navigation_home_to_navigation_story)
         }
         btnLogout.setOnClickListener {
-            homeViewModel.logout()
-            safeNavigate(FRAGMENT_ID, R.id.action_navigation_home_to_navigation_login)
+            homeViewModel.logout{ isError, message ->
+                if(isError == false){
+                    safeNavigate(FRAGMENT_ID, R.id.action_navigation_home_to_navigation_login)
+                }
+            }
         }
         btnMaps.setOnClickListener {
             safeNavigate(FRAGMENT_ID, R.id.action_navigation_home_to_navigation_maps)

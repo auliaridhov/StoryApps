@@ -20,7 +20,6 @@ class HomeRepository(private val storyDatabase: StoryDatabase, private val apiSe
             ),
             remoteMediator = StoryRemoteMediator(storyDatabase, apiService, token),
             pagingSourceFactory = {
-//                StoryPagingSource(token, apiService)
                 storyDatabase.storyDao().getAllStory()
             }
         ).liveData
@@ -30,8 +29,9 @@ class HomeRepository(private val storyDatabase: StoryDatabase, private val apiSe
         return UserPreference(context).getUser()
     }
 
-    fun logout() {
+    fun logout(callback: (error: Boolean?, message: String?) -> Unit) {
         val userPreference = UserPreference(context)
         userPreference.removeUser()
+        callback(false, "success logout")
     }
 }

@@ -29,8 +29,11 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
         _profile.value = homeRepository.getProfile()
     }
 
-    fun logout() {
-        homeRepository.logout()
+    fun logout(callback: (error: Boolean?, message: String?) -> Unit) {
+        homeRepository.logout { isError, message ->
+            callback(isError, message)
+        }
+
     }
 }
 
