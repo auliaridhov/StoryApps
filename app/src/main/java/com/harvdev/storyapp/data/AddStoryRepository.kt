@@ -14,39 +14,43 @@ import java.io.File
 
 class AddStoryRepository (private val context: Context) {
 
-    fun uploadImage(file: File, desc: String, callback: (Boolean?, String?) -> Unit){
+    fun uploadImage(file: File?, desc: String, callback: (Boolean?, String?) -> Unit){
 
-        val description = desc.toRequestBody("text/plain".toMediaType())
+        if (file == null) {
+            callback(true, "file is null")
+        } else {
+            val description = desc.toRequestBody("text/plain".toMediaType())
 
-        val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
-        val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
-            "photo",
-            file.name,
-            requestImageFile
-        )
+            val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                "photo",
+                file.name,
+                requestImageFile
+            )
 
-        val userPreference = UserPreference(context)
-        val token = "Bearer ${userPreference.getUser().token}"
+            val userPreference = UserPreference(context)
+            val token = "Bearer ${userPreference.getUser().token}"
 
-        val service = ApiConfig.getApiService().uploadImage(token, imageMultipart, description)
+            val service = ApiConfig.getApiService().uploadImage(token, imageMultipart, description)
 
-        service.enqueue(object : Callback<ResponseRegister> {
-            override fun onResponse(
-                call: Call<ResponseRegister>,
-                response: Response<ResponseRegister>
-            ) {
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    if (responseBody != null && responseBody.error == false) {
-                        callback(false, responseBody.message)
+            service.enqueue(object : Callback<ResponseRegister> {
+                override fun onResponse(
+                    call: Call<ResponseRegister>,
+                    response: Response<ResponseRegister>
+                ) {
+                    if (response.isSuccessful) {
+                        val responseBody = response.body()
+                        if (responseBody != null && responseBody.error == false) {
+                            callback(false, responseBody.message)
+                        }
+                    } else {
+                        callback(true, response.message())
                     }
-                } else {
-                    callback(true, response.message())
                 }
-            }
-            override fun onFailure(call: Call<ResponseRegister>, t: Throwable) {
-                callback(true, "Gagal instance Retrofit")
-            }
-        })
+                override fun onFailure(call: Call<ResponseRegister>, t: Throwable) {
+                    callback(true, "Gagal instance Retrofit")
+                }
+            })
+        }
     }
 }

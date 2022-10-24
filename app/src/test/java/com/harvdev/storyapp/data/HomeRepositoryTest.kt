@@ -1,24 +1,19 @@
-package com.harvdev.storyapp.ui.home
+package com.harvdev.storyapp.data
 
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.AsyncPagingDataDiffer
 import androidx.paging.PagingData
-import androidx.paging.PagingSource
-import androidx.paging.PagingState
-import androidx.recyclerview.widget.ListUpdateCallback
 import com.harvdev.storyapp.DataDummy
 import com.harvdev.storyapp.MainDispatcherRule
 import com.harvdev.storyapp.adapter.StoriesAdapter
-import com.harvdev.storyapp.data.HomeRepository
 import com.harvdev.storyapp.getOrAwaitValue
 import com.harvdev.storyapp.model.Story
 import com.harvdev.storyapp.model.UserModel
+import com.harvdev.storyapp.ui.home.HomeViewModel
+import com.harvdev.storyapp.ui.home.StoryPagingSource
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -28,10 +23,8 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.junit.MockitoJUnitRunner
 
-
-@ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class HomeViewModelTest {
+class HomeRepositoryTest {
 
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
@@ -41,17 +34,15 @@ class HomeViewModelTest {
 
     @Mock
     private lateinit var homeRepository: HomeRepository
-    private lateinit var homeViewModel: HomeViewModel
     private var dummyUser = UserModel()
     private lateinit var context: Context
     @Before
     fun setUp() {
-        homeViewModel = HomeViewModel(homeRepository)
         context = Mockito.mock(Context::class.java)
     }
 
     @Test
-    fun `when Get Story Should Not Null and Return Success`() = runTest {
+    fun `when Get Story Should Not Null and Return Success`() = kotlinx.coroutines.test.runTest {
         val dummyStory = DataDummy.generateDummyStoryEntity()
         val data: PagingData<Story> = StoryPagingSource.snapshot(dummyStory)
         val expectedQuote = MutableLiveData<PagingData<Story>>()
@@ -63,7 +54,7 @@ class HomeViewModelTest {
 
         val differ = AsyncPagingDataDiffer(
             diffCallback = StoriesAdapter.DIFF_CALLBACK,
-            updateCallback = noopListUpdateCallback,
+            updateCallback = com.harvdev.storyapp.ui.home.noopListUpdateCallback,
             workerDispatcher = Dispatchers.Main,
         )
         differ.submitData(actualQuote)
@@ -77,37 +68,16 @@ class HomeViewModelTest {
 
     @Test
     fun `get Profile Not Login test`(){
-        homeViewModel.getProfile {
+        homeRepository.getProfile {
             Assert.assertNull(dummyUser)
         }
     }
 
     @Test
     fun `logout test`(){
-        homeViewModel.logout { isError, message ->
+        homeRepository.logout { isError, message ->
             Assert.assertFalse(isError == false)
             Assert.assertNotNull(message)
         }
     }
-}
-
-class StoryPagingSource : PagingSource<Int, LiveData<List<Story>>>() {
-    companion object {
-        fun snapshot(items: List<Story>): PagingData<Story> {
-            return PagingData.from(items)
-        }
-    }
-    override fun getRefreshKey(state: PagingState<Int, LiveData<List<Story>>>): Int {
-        return 0
-    }
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, LiveData<List<Story>>> {
-        return LoadResult.Page(emptyList(), 0, 1)
-    }
-}
-
-val noopListUpdateCallback = object : ListUpdateCallback {
-    override fun onInserted(position: Int, count: Int) {}
-    override fun onRemoved(position: Int, count: Int) {}
-    override fun onMoved(fromPosition: Int, toPosition: Int) {}
-    override fun onChanged(position: Int, count: Int, payload: Any?) {}
 }

@@ -21,6 +21,7 @@ import com.harvdev.storyapp.ui.utils.safeNavigate
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.harvdev.storyapp.adapter.LoadingStateAdapter
+import com.harvdev.storyapp.model.UserModel
 import com.harvdev.storyapp.ui.utils.ViewModelFactory
 
 class HomeFragment : Fragment() {
@@ -58,7 +59,9 @@ class HomeFragment : Fragment() {
         initOnClickListener()
         initObserver()
 
-        homeViewModel.getProfile()
+        homeViewModel.getProfile(){
+            setProfile(it)
+        }
         getAllStories()
     }
 
@@ -115,9 +118,13 @@ class HomeFragment : Fragment() {
                 loadingView.visibility = View.GONE
             }
         })
-        homeViewModel.profile.observe(viewLifecycleOwner, Observer {
-            textUsername.text = it.name
-        })
+//        homeViewModel.profile.observe(viewLifecycleOwner, Observer {
+//            textUsername.text = it.name
+//        })
+    }
+
+    private fun setProfile(userModel: UserModel){
+        textUsername.text = userModel.name
     }
 
     private fun initOnClickListener(){

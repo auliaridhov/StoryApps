@@ -25,8 +25,12 @@ class HomeViewModel(private val homeRepository: HomeRepository) : ViewModel() {
     fun getAllStories(): LiveData<PagingData<Story>> =
         homeRepository.getStory()
 
-    fun getProfile() {
-        _profile.value = homeRepository.getProfile()
+    fun getProfile(callback: (user: UserModel) -> Unit) {
+//        _profile.value = homeRepository.getProfile()
+        homeRepository.getProfile(){
+            callback(it)
+        }
+
     }
 
     fun logout(callback: (error: Boolean?, message: String?) -> Unit) {

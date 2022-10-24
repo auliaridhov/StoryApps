@@ -1,8 +1,6 @@
-package com.harvdev.storyapp.ui.login
+package com.harvdev.storyapp.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.harvdev.storyapp.DataDummy
-import kotlinx.coroutines.flow.flow
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -10,17 +8,15 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
-import com.harvdev.storyapp.data.LoginRepository
 
 @RunWith(MockitoJUnitRunner::class)
-class LoginViewModelTest {
+class LoginRepositoryTest {
 
     @get:Rule
     val instantExecutorRule = InstantTaskExecutorRule()
 
     @Mock
     private lateinit var loginRepository: LoginRepository
-    private lateinit var loginViewModel: LoginViewModel
 
     private val dummyName = "Yusuf"
     private val dummyEmail = "yeah@mail.com"
@@ -28,31 +24,27 @@ class LoginViewModelTest {
 
     @Before
     fun setUp() {
-        loginViewModel = LoginViewModel(loginRepository)
 
     }
 
     @Test
     fun `Register successfully`() {
-        loginViewModel.register(dummyName, dummyEmail, dummyPassword) { isError, message, ->
+        loginRepository.register(dummyName, dummyEmail, dummyPassword) { isError, message, ->
             Assert.assertFalse(isError == false)
             Assert.assertNotNull(message)
         }
-
     }
 
     @Test
     fun `Login successfully`() {
-        loginViewModel.login(dummyEmail, dummyPassword) { isError, message, ->
+        loginRepository.login(dummyEmail, dummyPassword) { isError, message, ->
             Assert.assertFalse(isError == false)
             Assert.assertNotNull(message)
         }
-
     }
 
     @Test
     fun `Check Is Login when not login`() {
-        Assert.assertFalse(loginViewModel.isLogin())
+        Assert.assertFalse(loginRepository.isLogin())
     }
-
 }

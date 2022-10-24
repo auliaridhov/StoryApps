@@ -1,15 +1,37 @@
+AddStoryViewModelTest
+a. Ketika upload file null
+   - memastikan error adalah true
+   - memastikan pesan error tidak null
+
 HomeViewModelTest
-- Memastikan story tidak null
-- Memastikan jumlah data story sesuai dengan yang diharapkan.
+a. Ketika berhasil mendapatkan list story dan return success
+   - Memastikan story tidak null
+   - Memastikan story sama dengan data dummy
+   - Memastikan jumlah data sama dengan data dummy
+   - Memastikan nama dari story pertama sama dengan data dummy
+
+b. Ketika mendapatkan data akun ketika belum login
+   - Memastikan data nya null
+
+c. Ketika logout
+   - Memastikan tidak error
+   - Memastikan pesan error tidak null
 
 LoginViewModelTest
-- Memastikan registrasi tidak error dan terdapat response message
-- Memastikan login tidak error dan terdapat response message
-- Memastikan telah login
+a. Ketika berhasil registrasi
+   - Memastikan tidak error
+   - Memastikan pesan error tidak null
+
+b. Ketika berhasil login
+   - Memastikan tidak error
+   - Memastikan pesan error tidak null
+
+c. Ketika belum login dan mengecek login
+   - Memastikan jika belum login
 
 MapsViewModelTest
-- Memastikan story tidak null
+a. Ketika berhasil mendapatkan list story dan return success
+   - Memastikan data tidak null
 
-AddStoryViewModelTest
-- Memastikan jika file nya null gagal untuk upload
+
 

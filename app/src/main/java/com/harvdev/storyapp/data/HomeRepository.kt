@@ -25,8 +25,9 @@ class HomeRepository(private val storyDatabase: StoryDatabase, private val apiSe
         ).liveData
     }
 
-    fun getProfile(): UserModel {
-        return UserPreference(context).getUser()
+    fun getProfile(callback: (userModel: UserModel) -> Unit){
+//        return UserPreference(context).getUser()
+        callback(UserPreference(context).getUser())
     }
 
     fun logout(callback: (error: Boolean?, message: String?) -> Unit) {
