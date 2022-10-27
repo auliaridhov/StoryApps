@@ -1,5 +1,5 @@
 AddStoryViewModelTest
-a. Ketika upload file null
+a. Ketika upload file gagal
    - memastikan error adalah true
    - memastikan pesan error tidak null
 

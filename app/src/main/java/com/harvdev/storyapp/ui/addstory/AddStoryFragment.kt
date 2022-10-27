@@ -28,7 +28,12 @@ import com.harvdev.storyapp.R
 import com.harvdev.storyapp.databinding.AddStoryFragmentBinding
 import com.harvdev.storyapp.ui.home.HomeViewModel
 import com.harvdev.storyapp.ui.utils.*
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
 import java.io.File
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 
 class AddStoryFragment : Fragment() {
 
@@ -180,7 +185,16 @@ class AddStoryFragment : Fragment() {
             } else {
                 val file = reduceFileImage(getFile as File)
 
-                viewModel.uploadImage(file, edDescription.text.toString()){ error, message ->
+                val description = edDescription.text.toString().toRequestBody("text/plain".toMediaType())
+
+                val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+                val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                    "photo",
+                    file.name,
+                    requestImageFile
+                )
+
+                viewModel.uploadImage(imageMultipart, description){ error, message ->
                     if (error == true){
                         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
                     } else {

@@ -1,6 +1,7 @@
 package com.harvdev.storyapp.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.harvdev.storyapp.DataDummy
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
@@ -19,18 +20,14 @@ class AddStoryRepositoryTest {
     @Mock
     private lateinit var addStoryRepository: AddStoryRepository
 
-
-    private val dummyContent = "testtt"
-    private var getFile: File? = null
-
     @Before
     fun setUp() {
 
     }
 
     @Test
-    fun `Add Story Test`() {
-        addStoryRepository.uploadImage(getFile, dummyContent) { isError, message ->
+    fun `Add Story Failed Test`() {
+        addStoryRepository.uploadImage(DataDummy.generateDummyMultipartFile(), DataDummy.generateDummyRequestBody()) { isError, message ->
             Assert.assertTrue(isError == true)
             Assert.assertNotNull(message)
         }

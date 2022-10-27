@@ -5,6 +5,7 @@ import com.harvdev.storyapp.model.ResponseLogin
 import com.harvdev.storyapp.model.Story
 import com.harvdev.storyapp.model.UserModel
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 
 object DataDummy {
@@ -48,5 +49,10 @@ object DataDummy {
     fun generateDummyMultipartFile(): MultipartBody.Part {
         val dummyText = "text"
         return MultipartBody.Part.create(dummyText.toRequestBody())
+    }
+
+    fun generateDummyRequestBody(): RequestBody {
+        val dummyText = "text"
+        return dummyText.toRequestBody()
     }
 }

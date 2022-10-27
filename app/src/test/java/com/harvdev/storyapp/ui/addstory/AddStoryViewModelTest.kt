@@ -23,17 +23,14 @@ class AddStoryViewModelTest {
     private lateinit var addStoryRepository: AddStoryRepository
     private lateinit var addStoryViewModel: AddStoryViewModel
 
-    private val dummyContent = "testtt"
-    private var getFile: File? = null
-
     @Before
     fun setUp() {
         addStoryViewModel = AddStoryViewModel(addStoryRepository)
 
     }
     @Test
-    fun `Add Story Test`() {
-        addStoryViewModel.uploadImage(getFile, dummyContent) { isError, message ->
+    fun `Add Story Failed Test`() {
+        addStoryViewModel.uploadImage(DataDummy.generateDummyMultipartFile(), DataDummy.generateDummyRequestBody()) { isError, message ->
             Assert.assertTrue(isError == true)
             Assert.assertNotNull(message)
         }
